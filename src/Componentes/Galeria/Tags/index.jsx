@@ -1,16 +1,22 @@
+import { styled } from 'styled-components';
 import tags from './tags.json'
-import styled from "styled-components";
+
+const TagsContainer = styled.section`
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    margin-top: 56px;
+`
 
 const TagTitulo = styled.h3`
     color: #D9D9D9;
     font-size: 24px;
     margin: 0;
-`
+`;
 
 const Tag = styled.button`
     font-size: 24px;
     color: #FFFFFF;
-    max-width: fit-content;
     background: rgba(217, 217, 217, 0.3);
     border-radius: 10px;
     cursor: pointer;
@@ -23,19 +29,19 @@ const Tag = styled.button`
     }
 `
 
-const ContainerTag = styled.div`
+const Div = styled.div`
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 24px;
+    justify-content: end;
 `
 
-
-const Tags = () =>{
-    return (<ContainerTag>
+const Tags = () => {
+    return <TagsContainer>
         <TagTitulo>Busque por tags:</TagTitulo>
-        {tags.map(tag => <Tag key={tag.id}>{tag.titulo}</Tag>)}
-    </ContainerTag>)
+        <Div>
+            {tags.map(tag => <Tag key={tag.id}>{tag.titulo}</Tag>)}
+        </Div>
+    </TagsContainer>
 }
 
-export default Tags;
+export default Tags

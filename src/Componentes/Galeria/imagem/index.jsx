@@ -1,69 +1,57 @@
-import styled from "styled-components";
+import { styled } from "styled-components"
+import BotaoIcone from "../../BotaoIcone"
 
-const ContainerImagem = styled.figure`
+const Figure = styled.figure`
+    width: ${props => props.$expandida ? '90%' : '460px'};
+    max-width: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    width: ${(props) => (props.$expandida ? '90%' : '460px')};
-    max-width: 100%;
+    & > img {
+        max-width: 100%;
+        border-radius: 20px 20px 0 0;
+    }
+    figcaption {
+        background-color: #001634;
+        border-radius: 0px 0px 20px 20px;
+        color: white;
+        box-sizing: border-box;
+        padding: 12px;
+        h3 {
+            font-family: 'GandhiSansBold';
+        }
+        h4 {
+            flex-grow: 1;
+        }
+        h3, h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+    }
 `
 
-const ImagemDaGaleria = styled.img`
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    max-width: 100%;
-`
-
-const ContainerInfosImagem = styled.figcaption`
-    display: flex;
-    flex-direction: column;
-    background-color: #001634;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    box-sizing: border-box;
-`
-
-const  TituloDaImagem = styled.h3`
-    padding: 0 1rem;
-    margin: 1rem 0 0 0;
-    color: white;
-    font-family: 'GandhiSansBold';
-`
-
-const  ContainerDescricaoDaImagem = styled.footer`
+const Rodape = styled.footer`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 2.5rem;
-    padding: 0 1rem;
 `
 
-const DescrivaoDaImagem = styled.p`
-    color: white;
-    padding: 0;
-`
-
-const BotoesDaImagem = styled.button`
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-`
-
-const Imagem = ({foto}) =>{
-    return(
-        <ContainerImagem>
-            <ImagemDaGaleria src={foto.path} alt={foto.titulo} />
-            <ContainerInfosImagem>
-                <TituloDaImagem>{foto.titulo}</TituloDaImagem>
-                <ContainerDescricaoDaImagem>
-                    <DescrivaoDaImagem>{foto.fonte}</DescrivaoDaImagem>
-                    <div>
-                        <BotoesDaImagem><img src="./icones/favorito.png" alt="Ícone de favoritar" /></BotoesDaImagem>
-                        <BotoesDaImagem><img src="./icones/expandir.png" alt="Ícone de expandir a imagem" /></BotoesDaImagem>
-                    </div>
-                </ContainerDescricaoDaImagem>
-            </ContainerInfosImagem>
-        </ContainerImagem>
-    )
+const Imagem = ({ foto, expandida = false, aoZoomSolicitado }) => {
+    return (<Figure $expandida={expandida} id={`foto-${foto.id}`}>
+        <img src={foto.path} alt={foto.alt} />
+        <figcaption>
+            <h3>{foto.titulo}</h3>
+            <Rodape>
+                <h4>{foto.fonte}</h4>
+                <BotaoIcone>
+                    <img src="/icones/favorito.png" alt="Icone de favorito" />
+                </BotaoIcone>
+                {!expandida && <BotaoIcone aria-hidden={expandida} onClick={() => aoZoomSolicitado(foto)}>
+                    <img src="/icones/expandir.png" alt="Icone de expandir" />
+                </BotaoIcone>}
+            </Rodape>
+        </figcaption>
+    </Figure>)
 }
 
-export default Imagem;
+export default Imagem

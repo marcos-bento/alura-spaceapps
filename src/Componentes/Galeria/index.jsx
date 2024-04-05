@@ -1,37 +1,48 @@
-import Tags from "./Tags";
-import Titulo from "../Titulo";
-import Populares from "./Populares";
-import styled from "styled-components";
-import Imagem from "./imagem";
+import { styled } from "styled-components"
+import Titulo from "../Titulo"
+import Tags from "./Tags"
+import Populares from "./Populares"
+import Imagem from "./Imagem"
+import ImagemPopular from "./Populares/ImagemPopular"
 
 const GaleriaContainer = styled.div`
     display: flex;
-
+    gap: 24px;
 `
 
 const SecaoFluida = styled.section`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    flex-grow: 1;
 `
 
-const ContainerDoTitulo = styled.div`
-    grid-area: span 1/2;
-    margin-left: -95%;
+const ImagensContainer = styled.section`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
 `
 
-const Galeria = ({fotos = []}) =>{
-    return(
+const Galeria = ({ fotos = [], aoFotoSelecionada }) => {
+    return (
         <>
-            <Tags/>
+            <Tags />
             <GaleriaContainer>
                 <SecaoFluida>
-                    <ContainerDoTitulo><Titulo tituloInteiro={true}>Navegue pela galeria</Titulo></ContainerDoTitulo>
-                        {fotos.map(foto => <Imagem foto={foto}/>)}
+                    <Titulo>Navegue pela galeria</Titulo>
+                    <ImagensContainer>
+                        {fotos.map(foto => <Imagem 
+                            aoZoomSolicitado={aoFotoSelecionada}
+                            key={foto.id} 
+                            foto={foto} />)
+                        }
+                    </ImagensContainer>
                 </SecaoFluida>
-                <Populares/>
+                <SecaoFluida>
+                    <Populares />
+                        <ImagemPopular aoZoomSolicitado={aoFotoSelecionada}/>
+                </SecaoFluida>
             </GaleriaContainer>
         </>
     )
 }
 
-export default Galeria;
+export default Galeria
